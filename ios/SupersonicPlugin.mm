@@ -17,7 +17,7 @@
 
 /* The plugin must call super init.
 	Initializing the properties
-	_superSonicAppKey with nil value and _ssaPub with SupersonicAdsPublisher singleton
+	_superSonicAppKey with nil and _ssaPub with SupersonicAdsPublisher singleton
 */
 - (id) init {
 	self = [super init];
@@ -29,11 +29,13 @@
 	return self;
 }
 
-- (void) initializeWithManifest:(NSDictionary *)manifest appDelegate:(TeaLeafAppDelegate *)appDelegate {
+- (void) initializeWithManifest:(NSDictionary *)manifest
+                    appDelegate:(TeaLeafAppDelegate *)appDelegate {
 	@try {
 		NSDictionary *ios = [manifest valueForKey:@"ios"];
-	    self.supersonicAppKey = [ios valueForKey:@"supersonicAppKey"];
-		NSLog(@"{supersonic} Initializing with manifest supersonicAppKey: '%@'", self.supersonicAppKey);
+    self.supersonicAppKey = [ios valueForKey:@"supersonicAppKey"];
+		NSLog(@"{supersonic} Initializing with manifest supersonicAppKey: '%@'",
+      self.supersonicAppKey);
 	}
 	@catch (NSException *exception) {
 		NSLog(@"{supersonic} Failed during startup: %@", exception);
@@ -42,10 +44,9 @@
 
 - (void) showOffersForUserID:(NSDictionary *)jsonObject {
 	[self.ssaPub showOfferWallWithApplicationKey:self.supersonicAppKey
-									 userId:(NSString *)[jsonObject objectForKey:@"userID"]
-									 delegate:self
-									 additionalParameters:@{@"useClientSideCallbacks" : @(YES)}];
-
+							  userId:(NSString *)[jsonObject objectForKey:@"userID"]
+							  delegate:self
+					   		additionalParameters:@{@"useClientSideCallbacks" : @(YES)}];
 }
 
 /**
@@ -65,9 +66,9 @@
  * 'credits' value will be added to the next call.
 **/
 - (BOOL)ssaOfferWallDidReceiveCredit:(NSDictionary *)creditInfo {
-	[[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
-		@"onCreditReceived",@"name", [creditInfo valueForKey: @"credits"], @"credits",
-		nil]];
+	[[PluginManager get] dispatchJSEvent:
+    [NSDictionary dictionaryWithObjectsAndKeys:@"onCreditReceived",@"name",
+      [creditInfo valueForKey: @"credits"], @"credits", nil]];
     return YES;
 }
 @end
