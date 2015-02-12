@@ -1,33 +1,26 @@
 import util.setProperty as setProperty;
 
-var Supersonic = Class(function () {
+exports = new (Class(function () {
 
-	this.init = function(opts) {
+  this.init = function(opts) {
 
-		setProperty(this, "onCreditRecieved", {
-			set: function(f) {
-				if (typeof f === "function") {
-					onCreditRecieved = f;
-				} else {
-					onCreditRecieved = null;
-				}
-			},
-			get: function() {
-				return onCreditRecieved;
-			}
-		});
+    setProperty(this, "onCreditReceived", {
+      set: function(f) {
+        onCreditReceived = typeof f === "function" ? f : null;
+      },
+      get: function() {
+        return onCreditReceived;
+      }
+    });
 
-		NATIVE.events.registerHandler("onCreditRecieved", function() {
-			logger.log("{Supersonic} credit recieved");
-			if (typeof onCreditRecieved === "function") {
-				oncreditRecieved();
-			}
-		});
-	}
+    NATIVE.events.registerHandler("onCreditReceived", function(credit) {
+      if (typeof onCreditReceived === "function") {
+        onCreditReceived();
+      }
+    });
+  }
 
-	this.showOffersForUserID = function(userid) {
-		NATIVE.plugins.sendEvent("SupersonicPlugin", "showOffersForUserID", JSON.stringify({"userID":userid}));
-	};
-});
-
-exports = new Supersonic();
+  this.showOffersForUserID = function(userid) {
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "showOffersForUserID", JSON.stringify({"userID":userid}));
+  };
+}))();
