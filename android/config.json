@@ -1,12 +1,12 @@
 {
-		"copyFiles": [
-			"SupersonicPlugin.java"
-		],
-		"libraries": [
-		],
-		"jars": [
-			"./supersonic_sdk_5.12.jar"
-		],
-		"injectionXML": "manifest.xml",
-		"injectionXSL": "manifest.xsl"
+  "copyFiles": [
+    "SupersonicPlugin.java"
+  ],
+  "libraries": [
+  ],
+  "jars": [
+    "./supersonic_sdk_5.12.jar"
+  ],
+  "injectionXML": "manifest.xml",
+  "injectionXSL": "manifest.xsl"
 }
