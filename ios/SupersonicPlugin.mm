@@ -48,10 +48,25 @@
 
 }
 
-- (BOOL)ssaOfferWallDidReceiveCredit:(NSDictionary *)creditInfo{
-	NSLog(@"Credit Recieved %@",creditInfo);
+/**
+ * Called each time the user completes an offer.
+ * @param creditInfo - A dictionary with the following key-value pairs:
+ * @"credits" - (integer) The number of credits the user has Earned since the
+ * last ssaOfferwallDidReceiveCredit event that returned 'YES'. Note that the
+ * credits may represent multiple completions (see return parameter).
+ * @"totalCredits" - (integer) The total number of credits ever earned by the
+ * user.
+ * @"totalCreditsFlag" - (boolean) In some cases, we won’t be able to provide
+ * the exact amount of credits since the last event(specifically if the user
+ * clears the app’s data). In this case the ‘credits’ will be equal to the
+ * @"totalCredits", and this flag will be @(YES).
+ * @return The publisher should return a boolean stating if he handled this
+ * call (notified the user for example). if the return value is 'NO' the
+ * 'credits' value will be added to the next call.
+**/
+- (BOOL)ssaOfferWallDidReceiveCredit:(NSDictionary *)creditInfo {
 	[[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
-		@"onCreditRecieved",@"name",
+		@"onCreditReceived",@"name", [creditInfo valueForKey: @"credits"], @"credits",
 		nil]];
     return YES;
 }
