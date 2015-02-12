@@ -1,28 +1,28 @@
 {
-	"code": [
-		"SupersonicPlugin.h",
-		"SupersonicPlugin.mm",
-		"SSAMobileSDk/headers/SupersonicAdsPublisher.h",
-		"SSAMobileSDk/headers/SupersonicAdsAdvertiser.h"
-	],
-	"frameworks": [
-		"AVFoundation",
-		"CoreMedia",
-		"CoreVideo",
-		"QuartzCore",
-		"SystemConfiguration",
-		"CoreGraphics",
-		"CFNetwork",
-		"MobileCoreServices",
-		"libz.dylib",
-		"StoreKit",
-		"AdSupport",
-		"CoreLocation",
-		"CoreTelephony",
-		"Security",
-		"SSAMobileSDk/lib/SSASDK.a"
-	],
-	"libraries": [
-		"SSAMobileSDk"
-	]
+  "code": [
+    "SupersonicPlugin.h",
+    "SupersonicPlugin.mm",
+    "SSAMobileSDk/headers/SupersonicAdsPublisher.h",
+    "SSAMobileSDk/headers/SupersonicAdsAdvertiser.h"
+  ],
+  "frameworks": [
+    "AVFoundation",
+    "CoreMedia",
+    "CoreVideo",
+    "QuartzCore",
+    "SystemConfiguration",
+    "CoreGraphics",
+    "CFNetwork",
+    "MobileCoreServices",
+    "libz.dylib",
+    "StoreKit",
+    "AdSupport",
+    "CoreLocation",
+    "CoreTelephony",
+    "Security",
+    "SSAMobileSDk/lib/SSASDK.a"
+  ],
+  "libraries": [
+    "SSAMobileSDk"
+  ]
 }
