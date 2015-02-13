@@ -18,6 +18,7 @@ exports = new (Class(function () {
         onCreditReceived(credit);
       }
     });
+  }
 
   this.showOffersForUserID = function(userid) {
     NATIVE.plugins.sendEvent("SupersonicPlugin", "showOffersForUserID", JSON.stringify({"userID":userid}));
