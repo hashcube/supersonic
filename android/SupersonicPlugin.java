@@ -93,7 +93,7 @@ public class SupersonicPlugin implements IPlugin {
 
  }
 
-  public class onCreditReceived extends com.tealeaf.event.Event {
+  public class onCreditReceived extends Event {
 
     public onCreditReceived(int credits) {
       int credits;
