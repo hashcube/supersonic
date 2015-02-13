@@ -15,10 +15,9 @@ exports = new (Class(function () {
 
     NATIVE.events.registerHandler("onCreditReceived", function(credit) {
       if (typeof onCreditReceived === "function") {
-        onCreditReceived();
+        onCreditReceived(credit);
       }
     });
-  }
 
   this.showOffersForUserID = function(userid) {
     NATIVE.plugins.sendEvent("SupersonicPlugin", "showOffersForUserID", JSON.stringify({"userID":userid}));
