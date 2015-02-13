@@ -25,7 +25,7 @@
     return nil;
   }
   _supersonicAppKey = nil;
-    _ssaPub = [SupersonicAdsPublisher sharedInstance];
+  _ssaPub = [SupersonicAdsPublisher sharedInstance];
   return self;
 }
 
