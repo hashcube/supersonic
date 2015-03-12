@@ -90,18 +90,16 @@ public class SupersonicPlugin implements IPlugin {
     public void onOWAdClosed(){
       logger.log("{supersonic} onOWAdClosed");
     }
-
  }
 
   public class onCreditReceived extends Event {
+    int credits;
 
     public onCreditReceived(int credits) {
-      int credits;
-
       super("onCreditReceived");
+      logger.log("{supersonic} Credits received:", credits);
       this.credits = credits;
     }
-
   }
 
   public SupersonicPlugin() {

@@ -13,9 +13,9 @@ exports = new (Class(function () {
       }
     });
 
-    NATIVE.events.registerHandler("onCreditReceived", function(credit) {
+    NATIVE.events.registerHandler("onCreditReceived", function(evt) {
       if (typeof onCreditReceived === "function") {
-        onCreditReceived(credit);
+        onCreditReceived(evt.credits);
       }
     });
   }
