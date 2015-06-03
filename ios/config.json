@@ -23,7 +23,7 @@
     "SSAMobileSDk/lib/SSASDK.a"
   ],
   "libs": [
-    "SSAMobileSDk"
+    "SSAMobileSDK"
   ],
   "resources" : [
     "SSAMobileSDk/lib/SSASDK.a"
