@@ -22,7 +22,10 @@
     "Security",
     "SSAMobileSDk/lib/SSASDK.a"
   ],
-  "libraries": [
-    "SSAMobileSDk"
+  "libs": [
+    "SSAMobileSDK"
+  ],
+  "resources" : [
+    "SSAMobileSDk/lib/SSASDK.a"
   ]
 }
