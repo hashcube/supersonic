@@ -15,42 +15,54 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
 import android.content.DialogInterface;
-import com.supersonicads.sdk.*;
-import com.supersonicads.sdk.listeners.OnOfferWallListener;
-import com.supersonicads.sdk.SSAFactory;
-import com.supersonicads.sdk.SSAPublisher;
-import com.supersonicads.sdk.data.AdUnitsReady;
-import com.supersonicads.sdk.listeners.OnOfferWallListener;
-import com.supersonicads.sdk.utils.SDKUtils;
 
+import com.supersonic.adapters.supersonicads.SupersonicConfig;
+import com.supersonic.mediationsdk.logger.SupersonicError;
+import com.supersonic.mediationsdk.model.Placement;
+import com.supersonic.mediationsdk.sdk.InterstitialListener;
+import com.supersonic.mediationsdk.sdk.OfferwallListener;
+import com.supersonic.mediationsdk.sdk.RewardedVideoListener;
+import com.supersonic.mediationsdk.sdk.Supersonic;
+import com.supersonic.mediationsdk.sdk.SupersonicFactory;
+import com.supersonic.mediationsdk.utils.SupersonicUtils;
+import com.supersonicads.sdk.agent.SupersonicAdsAdvertiserAgent;
 
 public class SupersonicPlugin implements IPlugin {
 
-  HashMap<String, String> manifestKeyMap = new HashMap<String,String>();
-  Map<String, String> params = new HashMap<String, String>();
-  SSAPublisher ssaPub;
-  String supersonicAppKey;
-  String userID;
-  Activity myActivity;
+  Context _ctx = null;
+  Activity _activity = null;
+  private Supersonic mSupersonicInstance;
+  private SupersonicListener listener = null;
 
-  private class SupersonicListener implements OnOfferWallListener{
+  private Placement mPlacement;
 
-    public void onOWShowSuccess(){
-      logger.log("{supersonic} onOWShowSuccess");
+  private class SupersonicListener implements RewardedVideoListener, OfferwallListener {
+    /************************************************************
+     *         Supersonic Offerwall Listener
+     ************************************************************
+     */
+    @Override
+    public void onOfferwallInitSuccess(){
+      logger.log("{supersonic} onOfferwallInitSuccess");
     }
 
-    public void onOWGeneric(String arg0, String arg1) {
+    @Override
+    public void onOfferwallInitFail(SupersonicError supersonicError) {
+      logger.log("{supersonic} onOfferwallInitFail");
     }
 
-
-    public void onRVGeneric(String arg0, String arg1) {
+    @Override
+    public void onOfferwallOpened() {
+      logger.log("{supersonic} onOfferwallOpened");
     }
+
     /**
       * Invoked when the method 'showOfferWall' is called and the OfferWall fails to load.
       * Handle initialization error here.
       * @param description - A String which represents the reason of 'showOfferWall' failure.
       */
-    public void onOWShowFail(String description){
+    @Override
+    public void onOfferwallShowFail(SupersonicError supersonicError){
       logger.log("{supersonic} onOWShowFail");
     }
 
@@ -67,9 +79,10 @@ public class SupersonicPlugin implements IPlugin {
       * @return boolean - true if you received the callback and rewarded the user,
       * otherwise false.
       */
-    public boolean onOWAdCredited(int credits, int totalCredits, boolean totalCreditsFlag){
+    @Override
+    public boolean onOfferwallAdCredited(int credits, int totalCredits, boolean totalCreditsFlag){
       logger.log("{supersonic} onOWAdCredited");
-      EventQueue.pushEvent(new onCreditReceived(credits));
+      EventQueue.pushEvent(new onOWAdCredited(credits));
       return true;
     }
 
@@ -79,7 +92,8 @@ public class SupersonicPlugin implements IPlugin {
       * @param description - A String which represents the reason of 'getOfferWallCredits'
       * failure.
       */
-    public void onGetOWCreditsFailed(String description){
+    @Override
+    public void onGetOfferwallCreditsFail(SupersonicError supersonicError) {
       logger.log("{supersonic} onGetOWCreditsFailed");
     }
 
@@ -87,18 +101,93 @@ public class SupersonicPlugin implements IPlugin {
       * Invoked when the user is about to return to the application after closing
       * the Offerwall.
       */
-    public void onOWAdClosed(){
+    @Override
+    public void onOfferwallClosed(){
       logger.log("{supersonic} onOWAdClosed");
     }
- }
 
-  public class onCreditReceived extends Event {
+    /************************************************************
+     *         Supersonic RewardedVideo Listener
+     ************************************************************
+     */
+    @Override
+    public void onRewardedVideoInitSuccess() {
+      logger.log("{supersonic} onRewardedVideoInitSuccess");
+    }
+
+    @Override
+    public void onRewardedVideoInitFail(SupersonicError supersonicError) {
+      logger.log("{supersonic} onRewardedVideoInitFail");
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+      logger.log("{supersonic} onRewardedVideoAdOpened");
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+      logger.log("{supersonic} onRewardedVideoAdClosed");
+      EventQueue.pushEvent(new onRVAdClosed(mPlacement));
+      mPlacement = null;
+    }
+
+    @Override
+    public void onVideoAvailabilityChanged(final boolean available) {
+      logger.log("{supersonic} onVideoAvailabilityChanged");
+      EventQueue.pushEvent(new onRVAvailabilityChange(available));
+    }
+
+    @Override
+    public void onVideoStart() {
+      logger.log("{supersonic} onVideoStart");
+    }
+
+    @Override
+    public void onVideoEnd() {
+      logger.log("{supersonic} onVideoEnd");
+    }
+
+    @Override
+    public void onRewardedVideoShowFail(SupersonicError supersonicError) {
+      logger.log("{supersonic} onRewardedVideoShowFail");
+    }
+
+    @Override
+    public void onRewardedVideoAdRewarded(Placement placement) {
+      logger.log("{supersonic} onRewardedVideoAdRewarded");
+      mPlacement = placement;
+    }
+  }
+
+  public class onOWAdCredited extends Event {
     int credits;
 
-    public onCreditReceived(int credits) {
-      super("onCreditReceived");
+    public onOWAdCredited(int credits) {
+      super("supersonicOWCredited");
       logger.log("{supersonic} Credits received:", credits);
       this.credits = credits;
+    }
+  }
+
+  public class onRVAdClosed extends Event {
+    String placement = null;
+    public onRVAdClosed(Placement placement) {
+      super("supersonicRVAdClosed");
+      logger.log("{supersonic} RVAd rewarded received:");
+      if(placement != null) {
+        this.placement = placement.getRewardName();
+      }
+    }
+  }
+
+  public class onRVAvailabilityChange extends Event {
+    boolean available;
+
+    public onRVAvailabilityChange(boolean available) {
+      super("supersonicOnRVAvailabilityChange");
+      logger.log("{supersonic} supersonicOnRVAvailabilityChange:", available);
+      this.available = available;
     }
   }
 
@@ -109,43 +198,61 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onCreate(Activity activity, Bundle savedInstanceState) {
+    String userId = "";
+    String appKey = "";
+
     PackageManager manager = activity.getBaseContext().getPackageManager();
-    String key = "supersonicAppKey";
-    myActivity = activity;
+    _activity = activity;
+
     try {
       Bundle meta = manager.getApplicationInfo(activity.getApplicationContext().getPackageName(),
           PackageManager.GET_META_DATA).metaData;
-      if (meta.containsKey(key)) {
-        supersonicAppKey = meta.get(key).toString();
-      }
+      userId = meta.getString("supersonicUserId");
+      appKey = meta.getString("supersonicAppKey");
     } catch (Exception e) {
       logger.log("{supersonic} Exception while loading manifest keys:", e);
     }
 
-    logger.log("{supersonic} Installing for appKey:", supersonicAppKey);
+    logger.log("{supersonic} Installing for appKey:", appKey);
 
+    if(listener == null) {
+      listener = new SupersonicListener();
+    }
     //Initialize the SDK, passing the current context to the method
-    ssaPub = SSAFactory.getPublisherInstance(activity);
-    params.put("useClientSideCallbacks", "true");
+    mSupersonicInstance = SupersonicFactory.getInstance();
+
+    mSupersonicInstance.setRewardedVideoListener(listener);
+
+    mSupersonicInstance.initRewardedVideo(_activity, appKey, userId);
+
+    mSupersonicInstance.setOfferwallListener(listener);
+
+    mSupersonicInstance.initOfferwall(_activity, appKey, userId);
+
   }
 
 
   public void showOffersForUserID(String jsonData) {
     logger.log("{supersonic} showOffers called");
-    try {
-      JSONObject jsonObject = new JSONObject(jsonData);
-      userID = jsonObject.getString("userID");
-    } catch (Exception e) {
-      logger.log("{supersonic} WARNING: Failure in getting userID:", e);
-      e.printStackTrace();
-    }
 
-    ssaPub.showOfferWall(supersonicAppKey, userID, params, new SupersonicListener());
+    if(mSupersonicInstance.isOfferwallAvailable()) {
+      mSupersonicInstance.showOfferwall();
+    }
+  }
+
+  public void showRVAd(String jsonData) {
+    logger.log("{supersonic} showRewardedVideo called");
+
+    if(mSupersonicInstance.isRewardedVideoAvailable()) {
+      mSupersonicInstance.showRewardedVideo();
+    }
   }
 
   public void onResume() {
-    if (ssaPub != null) {
-      ssaPub.onResume(myActivity);
+    // super.onResume();
+
+    if (mSupersonicInstance != null) {
+      mSupersonicInstance.onResume(_activity);
     }
   }
 
@@ -153,8 +260,10 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onPause() {
-    if (ssaPub != null) {
-      ssaPub.onPause(myActivity);
+    // super.onPause();
+
+    if (mSupersonicInstance != null) {
+      mSupersonicInstance.onPause(_activity);
     }
   }
 
@@ -162,9 +271,9 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onDestroy() {
-    if (ssaPub != null) {
+    if (mSupersonicInstance != null) {
       // Release the SDK resources
-      ssaPub.release(myActivity);
+      mSupersonicInstance.release(_activity);
     }
   }
 
