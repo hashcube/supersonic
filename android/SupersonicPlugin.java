@@ -249,8 +249,6 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onResume() {
-    // super.onResume();
-
     if (mSupersonicInstance != null) {
       mSupersonicInstance.onResume(_activity);
     }
@@ -260,8 +258,6 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onPause() {
-    // super.onPause();
-
     if (mSupersonicInstance != null) {
       mSupersonicInstance.onPause(_activity);
     }

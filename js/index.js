@@ -2,116 +2,112 @@ import device;
 import event.Emitter as Emitter;
 import util.setProperty as setProperty;
 
-var isOnline = navigator.onLine;
+var is_online = navigator.onLine;
 
-var isRVConnected = false;
+var is_rv_connected = false;
 
-var RVsource = null;
+var rv_source = null;
 /*
  * Flag for RewardVideo init status
  */
-var isRVAvailable = false;
+var is_rv_available = false;
 
 /*
  * Flag for OfferWall init status
  */
-var isOWAvailable = false;
+var is_ow_available = false;
 
 var Supersonic = Class(Emitter, function (supr) {
-	this.init = function() {
-		supr(this, 'init', arguments);
+  this.init = function() {
+    supr(this, 'init', arguments);
 
-		setProperty(this, "onVideoClosed", {
-			set: function(f) {
-				// If a callback is being set,
-				if (typeof f === "function") {
-					onVideoClosed = f;
-				} else {
-					onVideoClosed = null;
-				}
-			},
-			get: function() {
-				return onVideoClosed;
-			}
-		});
+    setProperty(this, "onVideoClosed", {
+      set: function(f) {
+        // If a callback is being set,
+        if (typeof f === "function") {
+          onVideoClosed = f;
+        } else {
+          onVideoClosed = null;
+        }
+      },
+      get: function() {
+        return onVideoClosed;
+      }
+    });
 
-		setProperty(this, "onOfferwallCredited", {
-			set: function(f) {
-				// If a callback is being set,
-				if (typeof f === "function") {
-					onOfferwallCredited = f;
-				} else {
-					onOfferwallCredited = null;
-				}
-			},
-			get: function() {
-				return onOfferwallCredited;
-			}
-		});
-	};
+    setProperty(this, "onOfferwallCredited", {
+      set: function(f) {
+        // If a callback is being set,
+        if (typeof f === "function") {
+          onOfferwallCredited = f;
+        } else {
+          onOfferwallCredited = null;
+        }
+      },
+      get: function() {
+        return onOfferwallCredited;
+      }
+    });
+  };
 
-	this.isOWAdAvailable = function() {
-		return isOWAvailable == true;
-	};
+  this.isOWAdAvailable = function() {
+    return is_ow_available == true;
+  };
 
-	this.isRVAdAvailable = function() {
-		return isRVAvailable == true;
-	};
+  this.isRVAdAvailable = function() {
+    return is_rv_available == true;
+  };
 
-	this.showRVAd = function(placementName) {
-        RVsource = placementName;
+  this.showRVAd = function(placement_name) {
+    rv_source = placement_name;
 
-		NATIVE.plugins.sendEvent("SupersonicPlugin", "showRVAd", JSON.stringify({
-			placementName: placementName
-		}));
-	};
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "showRVAd", JSON.stringify({
+      placementName: placement_name
+    }));
+  };
 
-	this.showOWAd = function(userid) {
-		NATIVE.plugins.sendEvent("SupersonicPlugin", "showOffersForUserID", JSON.stringify({
-            userID: userid
-        }));
-    };
+  this.showOWAd = function(userid) {
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "showOffersForUserID", JSON.stringify({
+      userID: userid
+    }));
+  };
 });
 
 var supersonic = new Supersonic;
 
-function onRWAvailabilityChange(isRVConnected) {
-	logger.log("{supersonic} video availability callback js");
-	var available = isRVConnected && isOnline;
+function onRWAvailabilityChange(is_rv_connected) {
+  var available = is_rv_connected && is_online;
 
-	if (available != isRVAvailable) {
-		isRVAvailable = available;
+  if (available != is_rv_available) {
+    is_rv_available = available;
 
-		if (isRVAvailable) {
-			logger.log("Rewarded Video is now available");
-		} else {
-			logger.log("Rewarded Video is now unavailable");
-		}
-	}
+    if (is_rv_available) {
+      logger.log("Rewarded Video is now available");
+    } else {
+      logger.log("Rewarded Video is now unavailable");
+    }
+  }
 };
 
 NATIVE.events.registerHandler('supersonicRVAdClosed', function(evt) {
-	supersonic.onVideoClosed(RVsource, evt.placement);
-	RVsource = null;
+  supersonic.onVideoClosed(rv_source, evt.placement);
+  rv_source = null;
 });
 
 NATIVE.events.registerHandler('supersonicOnRVAvailabilityChange', function(evt) {
-	logger.log(evt);
-	onRWAvailabilityChange(evt.available);
+  onRWAvailabilityChange(evt.available);
 });
 
 window.addEventListener("online", function() {
-	isOnline = true;
+  is_online = true;
 
-	onRWAvailabilityChange(isRVConnected);
+  onRWAvailabilityChange(is_rv_connected);
 });
 
 window.addEventListener("offline", function() {
-	isOnline = false;
+  is_online = false;
 
-	onRWAvailabilityChange(isRVConnected);
+  onRWAvailabilityChange(is_rv_connected);
 });
-
-
 
 exports = supersonic;
