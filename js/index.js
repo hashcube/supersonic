@@ -54,11 +54,11 @@ var Supersonic = Class(Emitter, function (supr) {
     return is_ow_available == true;
   };
 
-  this.isRVAdAvailable = function() {
+  this.isVideoAdAvailable = function() {
     return is_rv_available == true;
   };
 
-  this.showRVAd = function(placement_name) {
+  this.showVideoAd = function(placement_name) {
     rv_source = placement_name;
 
     NATIVE.plugins.sendEvent("SupersonicPlugin", "showRVAd", JSON.stringify({
