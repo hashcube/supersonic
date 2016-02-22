@@ -86,11 +86,11 @@ var Supersonic = Class(Emitter, function (supr) {
   };
 
   this.isOWAdAvailable = function() {
-    return is_ow_available == true;
+    return is_ow_available === true;
   };
 
   this.isVideoAdAvailable = function() {
-    return is_rv_available == true;
+    return is_rv_available === true;
   };
 
   this.initVideoAd = function(user_id) {
