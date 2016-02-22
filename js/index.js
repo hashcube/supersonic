@@ -48,6 +48,41 @@ var Supersonic = Class(Emitter, function (supr) {
         return onOfferwallCredited;
       }
     });
+
+    function onRWAvailabilityChange(is_rv_connected) {
+      var available = is_rv_connected && is_online;
+
+      if (available != is_rv_available) {
+        is_rv_available = available;
+
+        if (is_rv_available) {
+          logger.log("Rewarded Video is now available");
+        } else {
+          logger.log("Rewarded Video is now unavailable");
+        }
+      }
+    };
+
+    NATIVE.events.registerHandler('supersonicRVAdClosed', function(evt) {
+      this.onVideoClosed(rv_source, evt.placement);
+      rv_source = null;
+    });
+
+    NATIVE.events.registerHandler('supersonicOnRVAvailabilityChange', function(evt) {
+      onRWAvailabilityChange(evt.available);
+    });
+
+    window.addEventListener("online", function() {
+      is_online = true;
+
+      onRWAvailabilityChange(is_rv_connected);
+    });
+
+    window.addEventListener("offline", function() {
+      is_online = false;
+
+      onRWAvailabilityChange(is_rv_connected);
+    });
   };
 
   this.isOWAdAvailable = function() {
@@ -85,41 +120,4 @@ var Supersonic = Class(Emitter, function (supr) {
   };
 });
 
-var supersonic = new Supersonic;
-
-function onRWAvailabilityChange(is_rv_connected) {
-  var available = is_rv_connected && is_online;
-
-  if (available != is_rv_available) {
-    is_rv_available = available;
-
-    if (is_rv_available) {
-      logger.log("Rewarded Video is now available");
-    } else {
-      logger.log("Rewarded Video is now unavailable");
-    }
-  }
-};
-
-NATIVE.events.registerHandler('supersonicRVAdClosed', function(evt) {
-  supersonic.onVideoClosed(rv_source, evt.placement);
-  rv_source = null;
-});
-
-NATIVE.events.registerHandler('supersonicOnRVAvailabilityChange', function(evt) {
-  onRWAvailabilityChange(evt.available);
-});
-
-window.addEventListener("online", function() {
-  is_online = true;
-
-  onRWAvailabilityChange(is_rv_connected);
-});
-
-window.addEventListener("offline", function() {
-  is_online = false;
-
-  onRWAvailabilityChange(is_rv_connected);
-});
-
-exports = supersonic;
+exports = new Supersonic();
