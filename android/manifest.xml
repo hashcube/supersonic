@@ -8,7 +8,6 @@
 <!--END_PLUGINS_MANIFEST-->
 <!--START_PLUGINS_APPLICATION-->
   <!--Supersonic-->
-  <meta-data android:name="supersonicUserId" android:value="" />
   <meta-data android:name="supersonicAppKey" android:value="" />
   <activity
     android:name="com.supersonicads.sdk.controller.ControllerActivity"
@@ -36,4 +35,8 @@
     android:name="com.jirbo.adcolony.AdColonyBrowser"
     android:configChanges="keyboardHidden|orientation|screenSize"
     android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+  <activity
+    android:name="com.vungle.publisher.FullScreenAdActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 <!--END_PLUGINS_APPLICATION-->

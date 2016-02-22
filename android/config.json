@@ -6,7 +6,8 @@
   ],
   "jars": [
     "mediationsdk-6.3.6.jar",
-    "adcolonyadapter-1.1.7.jar"
+    "adcolonyadapter-1.1.7.jar",
+    "vungleadapter-1.1.7.jar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"

@@ -31,6 +31,7 @@ public class SupersonicPlugin implements IPlugin {
 
   Context _ctx = null;
   Activity _activity = null;
+  String appKey = "";
   private Supersonic mSupersonicInstance;
   private SupersonicListener listener = null;
 
@@ -195,19 +196,16 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onCreateApplication(Context applicationContext) {
+    _ctx = applicationContext;
   }
 
   public void onCreate(Activity activity, Bundle savedInstanceState) {
-    String userId = "";
-    String appKey = "";
-
     PackageManager manager = activity.getBaseContext().getPackageManager();
     _activity = activity;
 
     try {
       Bundle meta = manager.getApplicationInfo(activity.getApplicationContext().getPackageName(),
           PackageManager.GET_META_DATA).metaData;
-      userId = meta.getString("supersonicUserId");
       appKey = meta.getString("supersonicAppKey");
     } catch (Exception e) {
       logger.log("{supersonic} Exception while loading manifest keys:", e);
@@ -220,17 +218,41 @@ public class SupersonicPlugin implements IPlugin {
     }
     //Initialize the SDK, passing the current context to the method
     mSupersonicInstance = SupersonicFactory.getInstance();
-
-    mSupersonicInstance.setRewardedVideoListener(listener);
-
-    mSupersonicInstance.initRewardedVideo(_activity, appKey, userId);
-
-    mSupersonicInstance.setOfferwallListener(listener);
-
-    mSupersonicInstance.initOfferwall(_activity, appKey, userId);
-
   }
 
+  public void initVideoAd(String jsonData) {
+    logger.log("{supersonic} Init video Ad");
+    String userId = "";
+
+    try {
+      JSONObject jsonObject = new JSONObject(jsonData);
+      userId = jsonObject.getString("user_id");
+    } catch (Exception e) {
+      logger.log("{supersonic} exception", e);
+    }
+
+    if(mSupersonicInstance != null) {
+      mSupersonicInstance.setRewardedVideoListener(listener);
+      mSupersonicInstance.initRewardedVideo(_activity, appKey, userId);
+    }
+  }
+
+  public void initOfferWallAd(String jsonData) {
+    logger.log("{supersonic} Init offerwall Ad");
+    String userId = "";
+
+    try {
+      JSONObject jsonObject = new JSONObject(jsonData);
+      userId = jsonObject.getString("user_id");
+    } catch (Exception e) {
+      logger.log("{supersonic} exception", e);
+    }
+
+    if(mSupersonicInstance != null) {
+      mSupersonicInstance.setOfferwallListener(listener);
+      mSupersonicInstance.initOfferwall(_activity, appKey, userId);
+    }
+  }  
 
   public void showOffersForUserID(String jsonData) {
     logger.log("{supersonic} showOffers called");

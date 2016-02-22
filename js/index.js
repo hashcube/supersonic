@@ -58,6 +58,18 @@ var Supersonic = Class(Emitter, function (supr) {
     return is_rv_available == true;
   };
 
+  this.initVideoAd = function(user_id) {
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "initVideoAd", JSON.stringify({
+      user_id: user_id
+    }));
+  };
+
+  this.initOfferWallAd = function(user_id) {
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "initOfferWallAd", JSON.stringify({
+      user_id: user_id
+    }));
+  };
+
   this.showVideoAd = function(placement_name) {
     rv_source = placement_name;
 
