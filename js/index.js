@@ -72,11 +72,13 @@ var Supersonic = Class(Emitter, function (supr) {
       onRWAvailabilityChange(evt.available);
     });
 
-    window.addEventListener("online", function() {
+    window.addEventListener("online", bind(this, function() {
       is_online = true;
 
-      onRWAvailabilityChange(is_rv_connected);
-    });
+      NATIVE.plugins.sendEvent("SupersonicPlugin", "initVideoAd", JSON.stringify({
+        user_id: this.user_id
+      }));
+    }));
 
     window.addEventListener("offline", function() {
       is_online = false;
@@ -94,6 +96,8 @@ var Supersonic = Class(Emitter, function (supr) {
   };
 
   this.initVideoAd = function(user_id) {
+    this.user_id = user_id;
+
     NATIVE.plugins.sendEvent("SupersonicPlugin", "initVideoAd", JSON.stringify({
       user_id: user_id
     }));
