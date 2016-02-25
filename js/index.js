@@ -75,9 +75,7 @@ var Supersonic = Class(Emitter, function (supr) {
     window.addEventListener("online", bind(this, function() {
       is_online = true;
 
-      NATIVE.plugins.sendEvent("SupersonicPlugin", "initVideoAd", JSON.stringify({
-        user_id: this.user_id
-      }));
+      this.initVideoAd(this.user_id);
     }));
 
     window.addEventListener("offline", function() {
