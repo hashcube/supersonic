@@ -15,8 +15,9 @@
   
   if (self = [super init]) {
     _supersonicAppKey = nil;
+    return self;
   }
-  return self;
+  return nil;
 }
 
 - (void) initializeWithManifest:(NSDictionary *)manifest
