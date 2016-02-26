@@ -1,11 +1,10 @@
 {
   "code": [
     "SupersonicPlugin.h",
-    "SupersonicPlugin.mm",
-    "SSAMobileSDk/headers/SupersonicAdsPublisher.h",
-    "SSAMobileSDk/headers/SupersonicAdsAdvertiser.h"
+    "SupersonicPlugin.mm"
   ],
   "frameworks": [
+    "Foundation",
     "AVFoundation",
     "CoreMedia",
     "CoreVideo",
@@ -14,18 +13,29 @@
     "CoreGraphics",
     "CFNetwork",
     "MobileCoreServices",
-    "libz.dylib",
+    "libz.tbd",
     "StoreKit",
     "AdSupport",
     "CoreLocation",
     "CoreTelephony",
     "Security",
-    "SSAMobileSDk/lib/SSASDK.a"
+    "Social",
+    "Webkit",
+    "EventKit",
+    "EventKitUI",
+    "MediaPlayer",
+    "MessageUI",
+    "AudioToolbox",
+    "libz.1.2.5.dylib",
+    "libsqlite3.dylib",
+    "UIKit",
+    "WebKit",
+    "Supersonic.framework",
+    "AdColony.framework",
+    "SUAdColonyAdapter.framework",
+    "SUVungleAdapter.framework"
   ],
-  "libs": [
-    "SSAMobileSDK"
-  ],
-  "resources" : [
-    "SSAMobileSDk/lib/SSASDK.a"
-  ]
+  "plist": {
+    "View controller-based status bar appearance": "No"
+  }
 }
