@@ -64,7 +64,7 @@ var Supersonic = Class(Emitter, function (supr) {
     };
 
     NATIVE.events.registerHandler('supersonicRVAdClosed', function(evt) {
-      this.onVideoClosed(rv_source, evt.placement);
+      this.onVideoClosed(rv_source, evt.placement, evt.rewardedCount);
       rv_source = null;
     });
 
@@ -75,7 +75,9 @@ var Supersonic = Class(Emitter, function (supr) {
     window.addEventListener("online", bind(this, function() {
       is_online = true;
 
-      this.initVideoAd(this.user_id);
+      if(this.user_id) {
+        this.initVideoAd(this.user_id);
+      }
     }));
 
     window.addEventListener("offline", function() {

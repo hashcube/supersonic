@@ -36,6 +36,7 @@ public class SupersonicPlugin implements IPlugin {
   private SupersonicListener listener = null;
 
   private Placement mPlacement;
+  private Integer rewardedCount = 0;
 
   private class SupersonicListener implements RewardedVideoListener, OfferwallListener {
     /************************************************************
@@ -119,7 +120,7 @@ public class SupersonicPlugin implements IPlugin {
     @Override
     public void onRewardedVideoInitFail(SupersonicError supersonicError) {
       logger.log("{supersonic} onRewardedVideoInitFail");
-      EventQueue.pushEvent(new onRVAdClosed(null));
+      EventQueue.pushEvent(new onRVAdClosed(null, 0));
       mPlacement = null;
     }
 
@@ -131,8 +132,9 @@ public class SupersonicPlugin implements IPlugin {
     @Override
     public void onRewardedVideoAdClosed() {
       logger.log("{supersonic} onRewardedVideoAdClosed");
-      EventQueue.pushEvent(new onRVAdClosed(mPlacement));
+      EventQueue.pushEvent(new onRVAdClosed(mPlacement, rewardedCount));
       mPlacement = null;
+      rewardedCount = 0;
     }
 
     @Override
@@ -160,6 +162,7 @@ public class SupersonicPlugin implements IPlugin {
     public void onRewardedVideoAdRewarded(Placement placement) {
       logger.log("{supersonic} onRewardedVideoAdRewarded");
       mPlacement = placement;
+      rewardedCount++;
     }
   }
 
@@ -175,12 +178,15 @@ public class SupersonicPlugin implements IPlugin {
 
   public class onRVAdClosed extends Event {
     String placement = null;
-    public onRVAdClosed(Placement placement) {
+    Integer rewardedCount = 0;
+
+    public onRVAdClosed(Placement placement, Integer rewardedCount) {
       super("supersonicRVAdClosed");
-      logger.log("{supersonic} RVAd rewarded received:");
       if(placement != null) {
         this.placement = placement.getRewardName();
+        this.rewardedCount = rewardedCount;
       }
+      logger.log("{supersonic} RVAd rewarded received:", this.placement, this.rewardedCount);
     }
   }
 
