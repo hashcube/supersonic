@@ -284,13 +284,22 @@ public class SupersonicPlugin implements IPlugin {
     }
   }
 
+  public void onRenderResume() {
+  }
+
   public void onStart() {
+  }
+
+  public void onFirstRun() {
   }
 
   public void onPause() {
     if (mSupersonicInstance != null) {
       mSupersonicInstance.onPause(_activity);
     }
+  }
+
+  public void onRenderPause() {
   }
 
   public void onStop() {
