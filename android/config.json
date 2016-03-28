@@ -7,7 +7,10 @@
   "jars": [
     "mediationsdk-6.3.6.jar",
     "adcolonyadapter-1.1.7.jar",
-    "vungleadapter-1.1.7.jar"
+    "vungleadapter-1.1.7.jar",
+    "dagger-1.2.2.jar",
+    "javax.inject-1.jar",
+    "nineoldandroids-2.4.0.jar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"
