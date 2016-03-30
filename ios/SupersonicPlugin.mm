@@ -160,13 +160,16 @@
 - (void)supersonicRVAdClosed {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSString *rewardName = nil;
+    NSNumber *rewardedCount = 0;
     if (self.placementInfo) {
         rewardName = self.placementInfo.rewardName;
+        rewardedCount = self.placementInfo.rewardAmount;
     }
 
     [[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
         @"supersonicRVAdClosed",@"name",
         rewardName, @"placement",
+        rewardedCount, @"rewardedCount",
         nil]];
 
     _placementInfo = nil;
