@@ -34,7 +34,7 @@
     "AdColony.framework",
     "SUAdColonyAdapter.framework",
     "SUVungleAdapter.framework",
-    "VungleSDK.embeddedframework/VungleSDK.framework"
+    "VungleSDK.framework"
   ],
   "plist": {
     "View controller-based status bar appearance": "No"
