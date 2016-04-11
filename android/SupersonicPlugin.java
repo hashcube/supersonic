@@ -120,7 +120,6 @@ public class SupersonicPlugin implements IPlugin {
     @Override
     public void onRewardedVideoInitFail(SupersonicError supersonicError) {
       logger.log("{supersonic} onRewardedVideoInitFail");
-      EventQueue.pushEvent(new onRVAdClosed(null, 0));
       mPlacement = null;
     }
 
