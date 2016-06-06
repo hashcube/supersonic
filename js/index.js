@@ -21,6 +21,45 @@ var Supersonic = Class(Emitter, function (supr) {
   this.init = function() {
     supr(this, 'init', arguments);
 
+    setProperty(this, "onAdDismissed", {
+      set: function(f) {
+        if (typeof f === "function") {
+          onAdDismissed = f;
+        } else {
+          onAdDismissed = null;
+        }
+      },
+      get: function() {
+        return onOfferClose;
+      }
+    });
+
+    setProperty(this, "onAdAvailable", {
+      set: function(f) {
+        if (typeof f === "function") {
+          onAdAvailable = f;
+        } else {
+          onAdAvailable = null;
+        }
+      },
+      get: function() {
+        return onAdAvailable;
+      }
+    });
+
+    setProperty(this, "onAdNotAvailable", {
+      set: function(f) {
+        if (typeof f === "function") {
+          onAdNotAvailable = f;
+        } else {
+          onAdNotAvailable = null;
+        }
+      },
+      get: function() {
+        return onAdNotAvailable;
+      }
+    });
+
     setProperty(this, "onVideoClosed", {
       set: function(f) {
         // If a callback is being set,
@@ -46,6 +85,27 @@ var Supersonic = Class(Emitter, function (supr) {
       },
       get: function() {
         return onOfferwallCredited;
+      }
+    });
+
+    NATIVE.events.registerHandler("SupersonicAdDismissed", function() {
+      logger.log("{supersonic} ad dismissed ");
+      if (typeof onAdDismissed === "function") {
+        onAdDismissed();
+      }
+    });
+
+    NATIVE.events.registerHandler("SupersonicAdAvailable", function() {
+      logger.log("{supersonic} ad available");
+      if (typeof onAdAvailable === "function") {
+        onAdAvailable("supersonic");
+      }
+    });
+
+    NATIVE.events.registerHandler("SupersonicAdNotAvailable", function() {
+      logger.log("{supersonic} ad not available");
+      if (typeof onAdNotAvailable === "function") {
+        onAdNotAvailable();
       }
     });
 
@@ -87,12 +147,28 @@ var Supersonic = Class(Emitter, function (supr) {
     });
   };
 
+  this.showInterstitial = function() {
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "showInterstitial", JSON.stringify({}));
+  };
+
+  this.cacheInterstitial = function() {
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "cacheInterstitial", JSON.stringify({}));
+  }
+
   this.isOWAdAvailable = function() {
     return is_ow_available === true;
   };
 
   this.isVideoAdAvailable = function() {
     return is_rv_available === true;
+  };
+
+  this.initInterstitial = function(user_id) {
+    this.user_id = user_id;
+
+    NATIVE.plugins.sendEvent("SupersonicPlugin", "initInterstitial", JSON.stringify({
+      user_id: user_id
+    }));
   };
 
   this.initVideoAd = function(user_id) {
