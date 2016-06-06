@@ -45,4 +45,10 @@
   <activity android:name="com.google.android.gms.ads.AdActivity"
     android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
     android:theme="@android:style/Theme.Translucent" />
+  <activity
+    android:name="com.chartboost.sdk.CBImpressionActivity"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:excludeFromRecents="true"
+    android:hardwareAccelerated="true"/>
 <!--END_PLUGINS_APPLICATION-->
