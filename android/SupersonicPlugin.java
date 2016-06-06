@@ -360,12 +360,20 @@ public class SupersonicPlugin implements IPlugin {
 
   public void cacheInterstitial(String jsonData) {
     logger.log("{supersonic} loadInterstitial");
-    mSupersonicInstance.loadInterstitial();
+    _activity.runOnUiThread(new Runnable() {
+      public void run() {
+        mSupersonicInstance.loadInterstitial();
+      }
+    });
   }
 
   public void showInterstitial(String jsonData) {
     logger.log("{supersonic} showInterstitial called");
-    mSupersonicInstance.showInterstitial();
+    _activity.runOnUiThread(new Runnable() {
+      public void run() {
+        mSupersonicInstance.showInterstitial();
+      }
+    });
   }
 
   public void showOffersForUserID(String jsonData) {
