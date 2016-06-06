@@ -7,3 +7,8 @@ You can test for successful integration on the [SuperSonice website](https://www
 ## Upgrading
 
 Please see if individual adapters have to be updated when updating the mediation sdk
+
+
+### Admob adapter
+
+The annotations was removed from the admob adapter to solve multiple references to Landroid/support/AnimRes
