@@ -54,4 +54,8 @@
     android:configChanges="keyboardHidden|orientation|screenSize"
     android:excludeFromRecents="true"
     android:hardwareAccelerated="true"/>
+  <activity
+    android:name="com.applovin.adview.AppLovinInterstitialActivity"/>
+  <activity
+    android:name="com.applovin.adview.AppLovinConfirmationActivity"/>
 <!--END_PLUGINS_APPLICATION-->
