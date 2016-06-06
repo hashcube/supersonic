@@ -56,7 +56,7 @@ public class SupersonicPlugin implements IPlugin {
      * @param supersonicError - An Object which represents the reason of initialization failure.
      */
     public void onInterstitialInitFailed(SupersonicError supersonicError) {
-      logger.log("{supersonic} onInterstitialInitFail");
+      logger.log("{supersonic} onInterstitialInitFail", supersonicError);
     }
 
     /**
@@ -71,7 +71,7 @@ public class SupersonicPlugin implements IPlugin {
       invoked when there is no Interstitial Ad available after calling load function.
      */
     public void onInterstitialLoadFailed(SupersonicError supersonicError) {
-      logger.log("{supersonic} onInterstitialLoadFailed");
+      logger.log("{supersonic} onInterstitialLoadFailed", supersonicError);
       EventQueue.pushEvent(new SupersonicAdNotAvailable());
     }
 
@@ -87,7 +87,7 @@ public class SupersonicPlugin implements IPlugin {
      * @param supersonicError - An object which represents the reason of showInterstitial failure.
      */
     public void onInterstitialShowFailed(SupersonicError supersonicError) {
-      logger.log("{supersonic} onInterstitialShowFailed");
+      logger.log("{supersonic} onInterstitialShowFailed", supersonicError);
     }
 
     /*
@@ -167,7 +167,7 @@ public class SupersonicPlugin implements IPlugin {
       */
     @Override
     public void onGetOfferwallCreditsFail(SupersonicError supersonicError) {
-      logger.log("{supersonic} onGetOWCreditsFailed");
+      logger.log("{supersonic} onGetOWCreditsFailed", supersonicError);
     }
 
     /**
@@ -190,7 +190,7 @@ public class SupersonicPlugin implements IPlugin {
 
     @Override
     public void onRewardedVideoInitFail(SupersonicError supersonicError) {
-      logger.log("{supersonic} onRewardedVideoInitFail");
+      logger.log("{supersonic} onRewardedVideoInitFail", supersonicError);
       mPlacement = null;
     }
 
@@ -225,7 +225,7 @@ public class SupersonicPlugin implements IPlugin {
 
     @Override
     public void onRewardedVideoShowFail(SupersonicError supersonicError) {
-      logger.log("{supersonic} onRewardedVideoShowFail");
+      logger.log("{supersonic} onRewardedVideoShowFail", supersonicError);
     }
 
     @Override
