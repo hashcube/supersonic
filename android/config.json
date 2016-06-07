@@ -9,7 +9,11 @@
     "adcolonyadapter-2.0.1.jar",
     "vungleadapter-2.0.3.jar",
     "dagger-2.1.jar",
-    "javax.inject-1.jar"
+    "javax.inject-1.jar",
+    "facebookadapter-1.1.1.jar",
+    "admobadapter-1.0.0-1.jar",
+    "chartboostadapter-2.0.1.jar",
+    "applovinadapter-2.0.1.jar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"
