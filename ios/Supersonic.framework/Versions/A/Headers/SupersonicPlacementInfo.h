@@ -5,15 +5,14 @@
 
 @interface SupersonicPlacementInfo : NSObject
 
-- (instancetype)init NS_UNAVAILABLE; 
-- (instancetype) initWithPlacementName:(NSString*)placementName
-                        withRewardName:(NSString*)name
-                      withRewardAmount:(NSNumber*)amount
-    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithPlacementName:(NSString *)placementName
+                       withRewardName:(NSString *)name
+                     withRewardAmount:(NSNumber*)amount NS_DESIGNATED_INITIALIZER;
 
-@property (readonly) NSString* placementName;
-@property (readonly) NSString* rewardName;
-@property (readonly) NSNumber* rewardAmount;
+@property (readonly) NSString *placementName;
+@property (readonly) NSString *rewardName;
+@property (readonly) NSNumber *rewardAmount;
 
 
 @end

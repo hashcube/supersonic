@@ -23,6 +23,25 @@
  */
 - (void)supersonicISInitFailedWithError:(NSError *)error;
 
+/*!
+ * @discussion Called each time an ad is available
+ */
+- (void)supersonicISReady;
+
+/*!
+ * @discussion Called each time an ad is not available
+ */
+- (void)supersonicISFailed;
+
+/*!
+ * @discussion Called each time the Interstitial window is about to open
+ */
+- (void)supersonicISAdOpened;
+
+/*!
+ * @discussion Called each time the Interstitial window is about to close
+ */
+- (void)supersonicISAdClosed;
 
 /*!
  * @discussion Called each time the Interstitial window has opened successfully.
@@ -37,22 +56,9 @@
 - (void)supersonicISShowFailWithError:(NSError *)error;
 
 /*!
- * @discussion Called each time the Interstitial availability state has changed. 
- *
- *              When available value is YES the next interstitial ad is ready to display, 
- *              When receiving NO value make sure you don't call the showInterstitial method.
- */
-- (void)supersonicISAdAvailable:(BOOL)available;
-
-/*!
  * @discussion Called each time the end user has clicked on the Interstitial ad.
  */
 - (void)supersonicISAdClicked;
-
-/*!
- * @discussion Called each time the Interstitial window is about to close
- */
-- (void)supersonicISAdClosed;
 
 @end
 

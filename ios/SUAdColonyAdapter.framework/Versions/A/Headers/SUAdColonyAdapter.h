@@ -3,8 +3,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Supersonic/SURVBaseAdapter.h>
+#import "Supersonic/SUBaseAdapter+Internal.h"
 
-@interface SUAdColonyAdapter : SURVBaseAdapter
+@interface SUAdColonyAdapter : SUBaseAdapter
 
 @end
