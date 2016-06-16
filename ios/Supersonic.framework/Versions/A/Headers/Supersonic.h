@@ -6,17 +6,20 @@
 #define SUPERSONIC_H
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 #import "SupersonicConfiguration.h"
+#import "SupersonicConfigurationProtocol.h"
 #import "SupersonicGender.h"
 #import "SupersonicRVDelegate.h"
 #import "SupersonicOWDelegate.h"
 #import "SupersonicISDelegate.h"
 #import "SupersonicLogDelegate.h"
 #import "SupersonicPlacementInfo.h"
+#import "SupersonicIntegrationHelper.h"
+#import "SupersonicEventsReporting.h"
 
-
-@class UIViewController;
+NS_ASSUME_NONNULL_BEGIN
 
 @interface Supersonic : NSObject
 
@@ -30,7 +33,7 @@
  * @discussion Get Supersonic SDK version by using the below function.
  * @return NSString representing the current version.
  */
-- (NSString*)getVersion;
+- (NSString *)getVersion;
 
 
 /*!
@@ -45,6 +48,14 @@
  */
 - (void)setGender:(SupersonicGender)gender;
 
+/*!
+ * @discussion Set this value to 'YES' if you want Supersonic SDK to track and notify
+ * about changes in network reachability.
+ */
+- (void)setShouldTrackReachability:(BOOL)flag;
+
+- (void)setMediationSegment:(NSString *)segment;
+
 /*-----------------------------------------------*/
 // Rewarded Video
 /*-----------------------------------------------*/
@@ -55,13 +66,13 @@
  * @param appKey is the unique ID of your Application in your Supersonic account.
  * @param withUserId is the unique ID of your end user. We support NSString from 1 to 64 characters. Common practice is to use the Apple Advertising ID (IDFA).
  */
-- (void)initRVWithAppKey:(NSString*)appKey withUserId:(NSString *)userId;
+- (void)initRVWithAppKey:(NSString *)appKey withUserId:(NSString *)userId;
 
 /*!
  * @discussion Set the delegate which the Supersonic SDK will call, to inform the application of Rewarded Video Ad Availability. Make sure to set your delegate before calling initRVWithAppKey.
  * @param rvDelegete is an instance which implements the SupersonicRVDelegate protocol.
  */
-- (void)setRVDelegate:(id<SupersonicRVDelegate>) rvDelegate;
+- (void)setRVDelegate:(id<SupersonicRVDelegate>)rvDelegate;
 
 /*!
  * @discussion Once an Ad Network has an available video you can show this video Ad by using the below function.
@@ -75,10 +86,10 @@
  *              Once an Ad Network has an available video, you can use the below function to define the exact Placement you want to show an ad from.
  *              The Reward settings of this Placement will be pulled from the Supersonic server:
  */
-- (void)showRVWithPlacementName:(NSString*)placementName;
+- (void)showRVWithPlacementName:(NSString *)placementName;
 
 
-- (void)showRVWithViewController:(UIViewController*)viewController;
+- (void)showRVWithViewController:(nullable UIViewController*)viewController;
 
 /*!
  * @discussion  Check for Rewarded Video Ad availability directly.
@@ -92,11 +103,17 @@
 - (BOOL)isAdAvailable;
 
 /*!
+ * @discussion To ask for RewardedVideo capping directly, you can use the below function.
+ * @return YES for capped RewardedVideo, else NO.
+ */
+- (BOOL)isRewardedVideoPlacementCapped:(NSString *)placementName;
+
+/*!
  * @discussion To get details about the specific Reward associated with each Ad Placement, you can use the below function.
  * @param placementName is the name of the placement in your Supersonic account.
  * @return SupersonicPlacementInfo instance with three properties: placementName, rewardName and rewardAmount (These properties are configured per placement in your Supersonic account).
  */
-- (SupersonicPlacementInfo*) getRVPlacementInfo:(NSString*)placementName;
+- (SupersonicPlacementInfo*)getRVPlacementInfo:(NSString *)placementName;
 
 /*-----------------------------------------------*/
 // Interstitial
@@ -110,13 +127,16 @@
  * @param appKey is the unique ID of your Application in your Supersonic account.
  * @param withUserId is the unique ID of your end user. We support NSString from 1 to 64 characters. Common practice is to use the Apple Advertising ID (IDFA).
  */
-- (void)initISWithAppKey:(NSString*)appKey withUserId:(NSString *)userId;
+- (void)initISWithAppKey:(NSString *)appKey
+              withUserId:(NSString *)userId;
 
 /*!
  * @discussion Set the delegate which the Supersonic SDK will call to inform the application of Interstitial Ad Availability. Make sure to set your delegate before calling initISWithAppKey.
  * @param isDelegate is an instance which implements SupersonicISDelegate protocol.
  */
-- (void)setISDelegate:(id<SupersonicISDelegate>) isDelegate;
+- (void)setISDelegate:(id<SupersonicISDelegate>)isDelegate;
+
+- (void)loadIS;
 
 /*!
  * @discussion  Once you have received the supersonicISAdAvailable callback with a YES value you are ready to show the Interstitial to your users. 
@@ -124,16 +144,23 @@
  *
  *              You will receive notification when the ad is loaded and ready to be shown with the supersonicISAdAvailable:(BOOL)available delegate.
  */
-- (void)showIS;
+- (void)showISWithViewController:(UIViewController *)viewController;
 
-- (void)showISWithViewController:(UIViewController*)viewController;
-- (void)forceShowIS;
+- (void)showISWithViewController:(UIViewController *)viewController
+                   placementName:(nullable NSString *)placementName;
 
 /*!
- * @discussion To ask for Interstital Ad availbility directly, call the below function.
+ * @discussion To ask for Interstitial availbility directly, you can use the below function.
  * @return YES for available Interstitial, else NO.
  */
-- (BOOL)isISAdAvailable;
+- (BOOL)isInterstitialAvailable;
+
+/*!
+ * @discussion To ask for Interstitial capping directly, you can use the below function.
+ * @return YES for capped Interstitial, else NO.
+ */
+- (BOOL)isInterstitialPlacementCapped:(NSString *)placementName;
+
 
 /*-----------------------------------------------*/
 // Offerwall
@@ -146,13 +173,14 @@
  * @param appKey is the unique ID of your Application in your Supersonic account.
  * @param withUserId is the unique ID of your end user. We support NSString from 1 to 64 characters. Common practice is to use the Apple Advertising ID (IDFA).
  */
-- (void)initOWWithAppKey:(NSString*)appKey withUserId:(NSString *)userId;
+- (void)initOWWithAppKey:(NSString *)appKey
+              withUserId:(NSString *)userId;
 
 /*!
  * @discussion Set the delegate which the Supersonic SDK will call to inform the application of Offerwall Availability. Make sure to set your delegate before calling initOWWithAppKey.
  * @param owDelegate is an instance which implements SupersonicOWDelegate protocol.
  */
-- (void)setOWDelegate:(id<SupersonicOWDelegate>) owDelegate;
+- (void)setOWDelegate:(id<SupersonicOWDelegate>)owDelegate;
 
 /*!
  * @discussion Once you receive the supersonicOWInitSuccess delegate you are ready to show the Offerwall to your user.
@@ -161,7 +189,7 @@
 - (void)showOW;
 
 
-- (void)showOWWithViewController:(UIViewController*)viewController;
+- (void)showOWWithViewController:(nullable UIViewController*)viewController;
 
 /*!
  * @discussion When using client-side callbacks, at any point during the user engagement with the app, you can receive the users total credits and any new credits the user has earned.
@@ -182,6 +210,10 @@
 
 - (void)setLogDelegate:(id<SupersonicLogDelegate>) logDelegate;
 
+- (NSString *)getAdvertiserId;
+
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif

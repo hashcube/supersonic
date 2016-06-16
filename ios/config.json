@@ -36,6 +36,9 @@
     "SUVungleAdapter.framework",
     "VungleSDK.framework"
   ],
+  "additionalLinkerFlags": [
+    "-ObjC"
+  ],
   "plist": {
     "View controller-based status bar appearance": "No"
   }
