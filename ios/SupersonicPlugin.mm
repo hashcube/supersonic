@@ -27,6 +27,7 @@
     _supersonicAppKey = [ios valueForKey:@"supersonicAppKey"];
     NSLog(@"{supersonic} Initializing with manifest supersonicAppKey: '%@'",
       self.supersonicAppKey);
+    self.viewController = appDelegate.tealeafViewController;
   }
   @catch (NSException *exception) {
     NSLog(@"{supersonic} Failed during startup: %@", exception);
@@ -39,6 +40,22 @@
 
   [[Supersonic sharedInstance] initRVWithAppKey:self.supersonicAppKey
       withUserId:(NSString *)[jsonObject objectForKey:@"user_id"]];
+}
+
+- (void) initInterstitial:(NSDictionary *)jsonObject {
+  NSLog(@"{supersonic} Init Interstitials");
+  [[Supersonic sharedInstance] setISDelegate:self];
+  [[Supersonic sharedInstance] initISWithAppKey:self.supersonicAppKey
+      withUserId:(NSString *)[jsonObject objectForKey:@"user_id"]];
+}
+
+- (void) cacheInterstitial:(NSDictionary *)jsonObject {
+  NSLog(@"{supersonic} cacheInterstitial");
+  [[Supersonic sharedInstance] loadIS];
+}
+
+- (void) showInterstitial:(NSDictionary *)jsonObject {
+  [[Supersonic sharedInstance] showISWithViewController:self.viewController];
 }
 
 - (void) initOfferWallAd:(NSDictionary *)jsonObject {
@@ -117,7 +134,7 @@
 // This method is invoked if initialization failed, in which
 // case check out 'error'.
 - (void)supersonicRVInitFailedWithError:(NSError *)error {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"%s%@", __PRETTY_FUNCTION__, error);
 }
 
 // This method lets you know whether or not there is a video
@@ -183,5 +200,66 @@
 // This method gets invoked when the video has stopped playing.
 - (void)supersonicRVAdEnded {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+/**
+* Called when initiation process of the Interstitial products has finished successfully.
+**/
+-(void)supersonicISInitSuccess{
+    NSLog(@"{supersonic} onInterstitialInitSuccess");
+}
+/**
+* Called each time an initiation stage fails, or if you have a problem in
+* the integration
+* You can learn about the reason by examining the 'error' value
+**/
+-(void)supersonicISInitFailedWithError:(NSError *)error{
+    NSLog(@"{supersonic} onInterstitialInitFailed %@", error);
+}
+/*
+Invoked when Interstitial Ad is ready to be shown after load function was called.
+*/
+-(void) supersonicISReady{
+    NSLog(@"{supersonic} onInterstitialReady");
+    [[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"SupersonicAdAvailable",@"name",
+        nil]];
+}
+/**
+* Called each time the Interstitial window has opened successfully.
+**/
+-(void)supersonicISShowSuccess{
+    NSLog(@"{supersonic} onInterstitialShown");
+}
+/**
+* Called if showing the Interstitial for the user has failed.
+* You can learn about the reason by examining the ‘error’ value
+**/
+-(void)supersonicISShowFailWithError:(NSError *)error{ }
+/**
+* Called each time the end user has clicked on the Interstitial ad.
+**/
+-(void)supersonicISAdClicked{ }
+/**
+* Called each time the Interstitial window is about to close
+**/
+-(void)supersonicISAdClosed{
+    NSLog(@"{supersonic} onInterstitialClose");
+    [[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"SupersonicAdDismissed",@"name",
+        nil]];
+}
+/**
+Called each time the Interstitial window is about to open
+**/
+-(void)supersonicISAdOpened{}
+/**
+Invoked when there is no Interstitial Ad available after calling load function.
+*/
+-(void)supersonicISFailed{
+    NSLog(@"{supersonic} onInterstitialNotAvailable");
+    [[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"SupersonicAdNotAvailable",@"name",
+        nil]];
 }
 @end

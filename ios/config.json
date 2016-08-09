@@ -30,14 +30,22 @@
     "libsqlite3.dylib",
     "UIKit",
     "WebKit",
+    "CoreMotion",
     "Supersonic.framework",
     "AdColony.framework",
     "SUAdColonyAdapter.framework",
     "SUVungleAdapter.framework",
-    "VungleSDK.framework"
+    "VungleSDK.framework",
+    "SUChartboostAdapter.framework",
+    "Chartboost.framework",
+    "SUFacebookAdapter.framework",
+    "FBAudienceNetwork.framework",
+    "SUAdMobAdapter.framework",
+    "GoogleMobileAds.framework"
   ],
   "additionalLinkerFlags": [
-    "-ObjC"
+    "-ObjC",
+    "-fobjc-arc"
   ],
   "plist": {
     "View controller-based status bar appearance": "No"
