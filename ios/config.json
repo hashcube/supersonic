@@ -19,21 +19,15 @@
     "CoreLocation",
     "CoreTelephony",
     "Security",
-    "Social",
     "Webkit",
     "EventKit",
     "EventKitUI",
     "MediaPlayer",
     "MessageUI",
     "AudioToolbox",
-    "libz.1.2.5.dylib",
-    "libsqlite3.dylib",
     "UIKit",
-    "WebKit",
     "CoreMotion",
     "Supersonic.framework",
-    "SUAdColonyAdapter.framework",
-    "SUVungleAdapter.framework",
     "SUChartboostAdapter.framework",
     "Chartboost.framework",
     "SUFacebookAdapter.framework",
@@ -44,8 +38,5 @@
   "additionalLinkerFlags": [
     "-ObjC",
     "-fobjc-arc"
-  ],
-  "plist": {
-    "View controller-based status bar appearance": "No"
-  }
+  ]
 }
