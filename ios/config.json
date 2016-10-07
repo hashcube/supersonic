@@ -20,23 +20,15 @@
     "CoreTelephony",
     "Security",
     "Webkit",
-    "EventKit",
-    "EventKitUI",
-    "MediaPlayer",
-    "MessageUI",
-    "AudioToolbox",
     "UIKit",
     "CoreMotion",
     "Supersonic.framework",
     "SUChartboostAdapter.framework",
     "Chartboost.framework",
     "SUFacebookAdapter.framework",
-    "FBAudienceNetwork.framework",
-    "SUAdMobAdapter.framework",
-    "GoogleMobileAds.framework"
+    "FBAudienceNetwork.framework"
   ],
   "additionalLinkerFlags": [
-    "-ObjC",
-    "-fobjc-arc"
+    "-ObjC"
   ]
 }
