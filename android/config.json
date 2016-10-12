@@ -6,8 +6,6 @@
   ],
   "jars": [
     "mediationsdk-6.4.6.jar",
-    "dagger-2.1.jar",
-    "javax.inject-1.jar",
     "facebookadapter-1.1.1.jar",
     "admobadapter-1.0.0-1.jar",
     "chartboostadapter-2.0.1.jar",
