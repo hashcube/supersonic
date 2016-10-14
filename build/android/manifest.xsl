@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <xsl:param name="supersonicAppKey"></xsl:param>
-
-  <xsl:template match="meta-data[@android:name='supersonicAppKey']">
-    <meta-data android:name="supersonicAppKey" android:value="{$supersonicAppKey}"/>
-  </xsl:template>
-
-  <!--  <xsl:strip-space elements="*" />-->
+  <!--*****SUPERSONIC_XSL_KEYS*****-->
   <xsl:output indent="yes" />
+  <xsl:template match="comment()" />
 
+  <!--*****SUPERSONIC_XSL_TEMPLATES*****-->
+  <xsl:output indent="yes" />
   <xsl:template match="comment()" />
 
   <xsl:template match="@*|node()">

@@ -1,0 +1,10 @@
+{
+  "copyFiles": [
+    "SupersonicPlugin.java"
+  ],
+  "jars": [
+    "mediationsdk-6.4.6.jar"
+  ],
+  "injectionXML": "manifest.xml",
+  "injectionXSL": "manifest.xsl"
+}
