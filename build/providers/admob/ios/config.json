@@ -1,0 +1,15 @@
+{
+  "frameworks": [
+    "AudioToolbox",
+    "EventKit",
+    "EventKitUI",
+    "MediaPlayer",
+    "MessageUI",
+    "SafariServices",
+    "SUAdMobAdapter.framework",
+    "GoogleMobileAds.framework"
+  ],
+  "additionalLinkerFlags": [
+    "-fobjc-arc"
+  ]
+}

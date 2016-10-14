@@ -1,0 +1,18 @@
+	<!-- Supersonic -->
+  <meta-data android:name="supersonicAppKey" android:value="" />
+  <meta-data android:name="com.google.android.gms.version"
+    android:value="@integer/google_play_services_version" />
+  <activity
+    android:name="com.supersonicads.sdk.controller.ControllerActivity"
+    android:configChanges="orientation|screenSize"
+    android:hardwareAccelerated="true" />
+  <activity
+    android:name="com.supersonicads.sdk.controller.InterstitialActivity"
+    android:configChanges="orientation|screenSize"
+    android:hardwareAccelerated="true"
+    android:theme="@android:style/Theme.Translucent" />
+  <activity
+    android:name="com.supersonicads.sdk.controller.OpenUrlActivity"
+    android:configChanges="orientation|screenSize"
+    android:hardwareAccelerated="true"
+    android:theme="@android:style/Theme.Translucent" />

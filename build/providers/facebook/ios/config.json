@@ -1,0 +1,13 @@
+{
+  "frameworks": [
+    "AudioToolbox",
+    "CoreImage",
+    "CoreMotion",
+    "SafariServices",
+    "UIKit",
+    "WebKit",
+    "VideoToolbox",
+    "SUFacebookAdapter.framework",
+    "FBAudienceNetwork.framework"
+  ]
+}

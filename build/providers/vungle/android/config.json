@@ -1,0 +1,8 @@
+{
+ "jars": [
+    "dagger-2.1.jar",
+    "javax.inject-1.jar",
+    "vungleadapter-2.0.3.jar"
+  ] 
+}
+  

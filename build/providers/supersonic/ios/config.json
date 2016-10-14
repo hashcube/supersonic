@@ -1,0 +1,29 @@
+{
+  "code": [
+    "SupersonicPlugin.h",
+    "SupersonicPlugin.mm"
+  ],
+  "frameworks": [
+    "Foundation",
+    "AVFoundation",
+    "CoreMedia",
+    "CoreVideo",
+    "QuartzCore",
+    "SystemConfiguration",
+    "CoreGraphics",
+    "CFNetwork",
+    "MobileCoreServices",
+    "libz.tbd",
+    "libxml2.tbd",
+    "StoreKit",
+    "AdSupport",
+    "CoreLocation",
+    "CoreTelephony",
+    "Security",
+    "Webkit",
+    "Supersonic.framework"
+  ],
+  "additionalLinkerFlags": [
+    "-ObjC"
+  ]
+}
