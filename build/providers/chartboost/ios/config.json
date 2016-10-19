@@ -1,0 +1,8 @@
+{
+  "frameworks": [
+    "UIKit",
+    "StoreKit",
+    "SUChartboostAdapter.framework",
+    "Chartboost.framework"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "frameworks": [
+    "AudioToolbox",
+    "libsqlite3.dylib",
+    "MediaPlayer",
+    "UIKit",
+    "WebKit",
+    "SUVungleAdapter.framework",
+    "VungleSDK.framework"
+  ],
+  "plist": {
+    "View controller-based status bar appearance": "No"
+  }
+}

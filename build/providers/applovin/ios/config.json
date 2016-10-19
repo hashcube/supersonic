@@ -1,0 +1,9 @@
+{
+  "frameworks": [
+    "UIKit",
+    "SUApplovinAdapter.framework"
+  ],
+  "additionalLinkerFlags": [
+    "-ObjC"
+  ]
+}

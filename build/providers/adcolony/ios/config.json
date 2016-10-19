@@ -1,0 +1,17 @@
+{
+  "frameworks": [
+    "Social",
+    "Webkit",
+    "EventKit",
+    "EventKitUI",
+    "MediaPlayer",
+    "MessageUI",
+    "AudioToolbox",
+    "libz.1.2.5.dylib",
+    "AdColony.framework",
+    "SUAdColonyAdapter.framework"
+  ],
+  "additionalLinkerFlags": [
+    "-fobjc-arc"
+  ]
+}

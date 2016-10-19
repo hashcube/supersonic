@@ -1,0 +1,7 @@
+  <!-- Chartboost -->
+  <activity
+    android:name="com.chartboost.sdk.CBImpressionActivity"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:excludeFromRecents="true"
+    android:hardwareAccelerated="true"/>

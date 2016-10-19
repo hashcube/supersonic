@@ -1,0 +1,5 @@
+  <!--AppLovin-->
+  <activity
+    android:name="com.applovin.adview.AppLovinInterstitialActivity"/>
+  <activity
+    android:name="com.applovin.adview.AppLovinConfirmationActivity"/>
