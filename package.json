@@ -3,11 +3,14 @@
   "version": "0.1.7",
   "devkit": {
     "clientPaths": {
-        "supersonic": "js"
+      "supersonic": "js"
     },
     "extensions": {
-        "ios": "ios",
-        "android": "android"
+      "ios": "ios",
+      "android": "android"
     }
+  },
+  "dependencies": {
+    "rimraf": "^2.5.4"
   }
 }
