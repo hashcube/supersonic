@@ -1,5 +1,6 @@
 {
  "jars": [
-    "admobadapter-2.1.1.jar"
+    "admobadapter-2.1.1.jar",
+    "google-gms-ads-lite-10.0.1.jar"
   ] 
 }
