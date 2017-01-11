@@ -3,7 +3,7 @@
     "SupersonicPlugin.java"
   ],
   "jars": [
-    "mediationsdk-6.4.6.jar"
+    "mediationsdk-6.4.21.jar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"
