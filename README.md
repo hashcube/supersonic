@@ -87,7 +87,3 @@ a previous version of the plugin).
 You will likely need a combination of config.json, manifest.xml, manifest.xsl,
 and various file changes to create a working integration. Follow the existing
 integrations as a guide.
-
-## NOTES on admob for android
-
-The annotations was removed from the admob adapter to solve multiple references to Landroid/support/AnimRes

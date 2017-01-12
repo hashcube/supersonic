@@ -420,10 +420,6 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onDestroy() {
-    if (mSupersonicInstance != null) {
-      // Release the SDK resources
-      mSupersonicInstance.release(_activity);
-    }
   }
 
   public void onNewIntent(Intent intent) {
