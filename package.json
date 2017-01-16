@@ -1,6 +1,6 @@
 {
   "name": "supersonic",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "devkit": {
     "clientPaths": {
       "supersonic": "js"
