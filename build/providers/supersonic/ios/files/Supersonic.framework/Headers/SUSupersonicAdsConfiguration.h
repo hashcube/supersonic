@@ -18,6 +18,6 @@
 @property (nonatomic)           NSInteger       debugLevel;
 //@property (nonatomic, strong)   NSNumber        *storeKitTimeout;
 
-+ (SUSupersonicAdsConfiguration *)getConfiguration DEPRECATED_ATTRIBUTE;
++ (SUSupersonicAdsConfiguration *)getConfiguration;
 
 @end

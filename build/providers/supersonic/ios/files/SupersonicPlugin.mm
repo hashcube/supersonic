@@ -28,6 +28,7 @@
     NSLog(@"{supersonic} Initializing with manifest supersonicAppKey: '%@'",
       self.supersonicAppKey);
     self.viewController = appDelegate.tealeafViewController;
+    [SupersonicIntegrationHelper validateIntegration];
   }
   @catch (NSException *exception) {
     NSLog(@"{supersonic} Failed during startup: %@", exception);
