@@ -52,10 +52,10 @@ public class SupersonicPlugin implements IPlugin {
 
     /**
      * Invoked when Interstitial initialization process is failed.
-     * @param supersonicError - An Object which represents the reason of initialization failure.
+     * @param ironSourceError - An Object which represents the reason of initialization failure.
      */
-    public void onInterstitialInitFailed(IronSourceError supersonicError) {
-      logger.log("{supersonic} onInterstitialInitFail", supersonicError);
+    public void onInterstitialInitFailed(IronSourceError ironSourceError) {
+      logger.log("{supersonic} onInterstitialInitFail", ironSourceError);
     }
 
     /*
@@ -71,8 +71,8 @@ public class SupersonicPlugin implements IPlugin {
      * Invoked when the interstial ad showing failed
      */
     @Override
-    public void onInterstitialAdShowFailed(IronSourceError supersonicError) {
-        logger.log("{supersonic} onInterstitialAdShowFailed", supersonicError);
+    public void onInterstitialAdShowFailed(IronSourceError ironSourceError) {
+        logger.log("{supersonic} onInterstitialAdShowFailed", ironSourceError);
         EventQueue.pushEvent(new SupersonicAdNotAvailable());
     }
 
@@ -119,10 +119,10 @@ public class SupersonicPlugin implements IPlugin {
 
     /**
      * Invoked when Interstitial ad failed to show.
-     * @param supersonicError - An object which represents the reason of showInterstitial failure.
+     * @param ironSourceError - An object which represents the reason of showInterstitial failure.
      */
-    public void onInterstitialShowFailed(IronSourceError supersonicError) {
-      logger.log("{supersonic} onInterstitialShowFailed", supersonicError);
+    public void onInterstitialShowFailed(IronSourceError ironSourceError) {
+      logger.log("{supersonic} onInterstitialShowFailed", ironSourceError);
     }
 
     @Override
@@ -275,8 +275,8 @@ public class SupersonicPlugin implements IPlugin {
      * Invoked when the reward video ad show failed
      */
     @Override
-    public void onRewardedVideoAdShowFailed(IronSourceError supersonicError) {
-        logger.log("{supersonic} onRewardedVideoShowFail", supersonicError);
+    public void onRewardedVideoAdShowFailed(IronSourceError ironSourceError) {
+        logger.log("{supersonic} onRewardedVideoShowFail", ironSourceError);
     }
   }
 
@@ -381,45 +381,36 @@ public class SupersonicPlugin implements IPlugin {
     if(listener == null) {
       listener = new SupersonicListener();
     }
-        
-    //Initialize the SDK, passing the current context to the method
-    //mSupersonicInstance = IronSource.getInstance();
   }
 
   public void initInterstitial(String jsonData) {
     logger.log("{supersonic} Init Interstitial");
 
-    //if(mSupersonicInstance != null) {
     SSAFactory.getAdvertiserInstance().reportAppStarted(_ctx);
-      IronSource.setInterstitialListener(listener);
-      SupersonicConfig.getConfigObj().setClientSideCallbacks(true);
-      IronSource.setUserId(getUserId(jsonData));
-      IronSource.init(_activity, appKey);
-    //}
+    IronSource.setInterstitialListener(listener);
+    SupersonicConfig.getConfigObj().setClientSideCallbacks(true);
+    IronSource.setUserId(getUserId(jsonData));
+    IronSource.init(_activity, appKey);
   }
 
   public void initVideoAd(String jsonData) {
     logger.log("{supersonic} Init video Ad");
 
-    //if(mSupersonicInstance != null) {
-      SSAFactory.getAdvertiserInstance().reportAppStarted(_activity);
-      SupersonicConfig.getConfigObj().setClientSideCallbacks(true);
-      IronSource.setRewardedVideoListener(listener);
-      IronSource.setUserId(getUserId(jsonData));
-      IronSource.init(_activity, appKey);
-    //}
+    SSAFactory.getAdvertiserInstance().reportAppStarted(_activity);
+    SupersonicConfig.getConfigObj().setClientSideCallbacks(true);
+    IronSource.setRewardedVideoListener(listener);
+    IronSource.setUserId(getUserId(jsonData));
+    IronSource.init(_activity, appKey);
   }
 
   public void initOfferWallAd(String jsonData) {
     logger.log("{supersonic} Init offerwall Ad");
 
-    //if(mSupersonicInstance != null) {
-      SSAFactory.getAdvertiserInstance().reportAppStarted(_ctx);
-      SupersonicConfig.getConfigObj().setClientSideCallbacks(true);
-      IronSource.setOfferwallListener(listener);
-      IronSource.setUserId(getUserId(jsonData));
-      IronSource.init(_activity, appKey);
-    //}
+    SSAFactory.getAdvertiserInstance().reportAppStarted(_ctx);
+    SupersonicConfig.getConfigObj().setClientSideCallbacks(true);
+    IronSource.setOfferwallListener(listener);
+    IronSource.setUserId(getUserId(jsonData));
+    IronSource.init(_activity, appKey);
   }
 
   public void cacheInterstitial(String jsonData) {
@@ -449,19 +440,13 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void showRVAd(String jsonData) {
-    logger.log("{supersonic} showRewardedVideo called: "+jsonData);
-    logger.log("{supersonic} checkins is available");
     if(IronSource.isRewardedVideoAvailable()) {
-      logger.log("{supersonic} yes available");
       IronSource.showRewardedVideo();
     }
-    else logger.log("{supersonic} not available");
   }
 
   public void onResume() {
-    //if (mSupersonicInstance != null) {
-      IronSource.onResume(_activity);
-    //}
+    IronSource.onResume(_activity);
   }
 
   public void onRenderResume() {
@@ -474,9 +459,7 @@ public class SupersonicPlugin implements IPlugin {
   }
 
   public void onPause() {
-    //if (mSupersonicInstance != null) {
-      IronSource.onPause(_activity);
-    //}
+    IronSource.onPause(_activity);
   }
 
   public void onRenderPause() {
